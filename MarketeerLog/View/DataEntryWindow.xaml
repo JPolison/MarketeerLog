@@ -1,0 +1,13 @@
+﻿<Window x:Class="MarketeerLog.View.DataEntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarketeerLog.View"
+        mc:Ignorable="d"
+        Title="Add Item" Height="491.803" Width="368.443" ResizeMode="NoResize">
+    <Grid>
+        <Button Content="AddItem" Command="{Binding Path=AddCommand}" HorizontalAlignment="Left" Height="74" Margin="137,120,0,0" VerticalAlignment="Top" Width="102"/>
+
+    </Grid>
+</Window>
