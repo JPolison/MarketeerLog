@@ -92,6 +92,8 @@
     <Compile Include="ViewModel\EventArguments\ViewModelRegisteredEventArgs.cs" />
     <Compile Include="ViewModel\EventArguments\ListingAddedEventArgs.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
+    <Compile Include="ViewModel\WindowProvider.cs" />
+    <Compile Include="ViewModel\IWindowService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelController.cs" />

@@ -10,12 +10,33 @@ using System.ComponentModel;
 using System.Windows.Input;
 
 using MarketeerLog.ViewModel.EventArguments;
+using System.Diagnostics;
+
 namespace MarketeerLog.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
         private ObservableCollection<ItemListing> _listedItems;
-        
+
+        private readonly DelegateCommand _editEntryCommand;
+
+        public ICommand EditEntryCommand => _editEntryCommand;
+
+        private readonly DelegateCommand _addEntryCommand;
+
+        public ICommand AddEntryCommand => _addEntryCommand;
+
+        private ItemListing _selectedListing;
+
+        public ItemListing SelectedListing
+        {
+            get => _selectedListing;
+            set
+            {
+                _selectedListing = value;
+                OnPropertyChanged("SelectedItem");
+            }
+        }
         
         public ObservableCollection<ItemListing> ListedItems
         {
@@ -30,9 +51,13 @@ namespace MarketeerLog.ViewModel
         public MainViewModel()
         {
             RegisterVM();
+            new WindowProvider();
             _listedItems = new ObservableCollection<ItemListing>();
+            _selectedListing = new ItemListing();
+            _editEntryCommand = new DelegateCommand(_editList, _canEditList);
+            _addEntryCommand = new DelegateCommand(_addList, _canAddList);
             ViewModelController.Instance.ViewModelRegistered += HandleRegister;
-            //_listedItems.CollectionChanged += _listedItemCollectionChanged;
+            ViewModelController.Instance.ViewModelUnregistered += HandleUnregister;
             ItemListing p = new ItemListing("Test", DateTime.Now, DateTime.Now, 10, 20);
             
           
@@ -40,50 +65,57 @@ namespace MarketeerLog.ViewModel
         }
 
        
+        private void _editList(object command)
+        {
+            DataEntryViewModel vm = new DataEntryViewModel(EntryMode.Edit);
+            vm.SetItem(_selectedListing);
+            WindowProvider.Instance.ShowDialog<View.DataEntryWindow>(vm);
+        }
 
-        public void _listedItemAdded(object sender, ListingAddedEventArgs args)
+        private bool _canEditList(object command)
+        {
+            if(SelectedListing != null)
+            {
+                return true;
+            }
+            return false;
+        
+        }
+
+        private void _addList(object command)
+        {
+            WindowProvider.Instance.ShowDialog<View.DataEntryWindow>(new DataEntryViewModel(EntryMode.Add));
+        }
+
+        private bool _canAddList(object command)
+        {
+            return true;
+        }
+
+
+        private void _listedItemAdded(object sender, ListingAddedEventArgs args)
         {
             _listedItems.Add(args.item);
         }
 
-        public void HandleRegister(object sender, ViewModelRegisteredEventArgs args)
+        private void HandleRegister(object sender, ViewModelRegisteredEventArgs args)
         {
             if (args.viewmodel.GetType().IsEquivalentTo(typeof(DataEntryViewModel)))
             {
                 DataEntryViewModel vm = (DataEntryViewModel)args.viewmodel;
                 vm.ItemAddedEvent += _listedItemAdded;
+              
             }
         }
 
-
-
-        /*
-        private void _listedItemCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HandleUnregister(object send, ViewModelRegisteredEventArgs args)
         {
-            if(e.NewItems != null && e.NewItems.Count > 0)
+            if(args.viewmodel.GetType().IsEquivalentTo(typeof(DataEntryViewModel)))
             {
-                foreach(INotifyPropertyChanged item in e.NewItems.OfType<INotifyPropertyChanged>())
-                {
-                    item.PropertyChanged += _itemListingPropertyChanged;
-
-                }
-            }
-            if(e.OldItems != null && e.OldItems.Count > 0)
-            {
-                foreach (INotifyPropertyChanged item in e.OldItems.OfType<INotifyPropertyChanged>())
-                {
-                    item.PropertyChanged -= _itemListingPropertyChanged;
-
-                }
+                DataEntryViewModel vm = (DataEntryViewModel)args.viewmodel;
+                vm.ItemAddedEvent -= _listedItemAdded;
+                Debug.WriteLine("UNREGISTERED EVENT");
             }
         }
-
-        private void _itemListingPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
-        } */
-
     }
-
- 
 }

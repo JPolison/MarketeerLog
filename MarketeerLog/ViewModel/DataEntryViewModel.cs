@@ -10,10 +10,12 @@ using System.Windows.Input;
 
 namespace MarketeerLog.ViewModel
 {
+    public enum EntryMode { Edit, Add };
+
     public class DataEntryViewModel : ViewModelBase
     {
 
-       // private EventHandler<ListingAddedEventArgs> _itemAddedEvent;
+      
         public event EventHandler<ListingAddedEventArgs> ItemAddedEvent;
 
         private ItemListing _item;
@@ -28,24 +30,80 @@ namespace MarketeerLog.ViewModel
             }
         }
 
+        private EntryMode _mode;
+
+        public EntryMode Mode
+        {
+            get => _mode;
+            set => _mode = value;
+        }
+
+        private string _buttonName;
+
+        public string ButtonName
+        {
+            get => _buttonName;
+            set
+            {
+                _buttonName = value;
+                OnPropertyChanged("ButtonName");
+            }
+        }
+   
+
         private readonly DelegateCommand _addCommand;
 
         public ICommand AddCommand => _addCommand;
 
-        public DataEntryViewModel()
+        public DataEntryViewModel(EntryMode mode)
         {
+            _item = new ItemListing();
             RegisterVM();
-            _addCommand = new DelegateCommand(AddToList);
+            SwitchMode(mode);
+            _addCommand = new DelegateCommand(AddToList, CanAddToList);
+         
             
         }
+        
+        public void SwitchMode(EntryMode mode)
+        {
+            Mode = mode;
+            switch(Mode)
+            {
+                case EntryMode.Add:
+                    ButtonName = "Add";
+                    break;
+                case EntryMode.Edit:
+                    ButtonName = "Close";
+                    break;
+            }
+        }
 
+        public void SetItem(ItemListing item)
+        {
+            if(Mode == EntryMode.Edit)
+            {
+                _item = item;
+            }
+        }
+
+        
         private void AddToList(object commandParam)
         {
-            _item = new ItemListing("test2", DateTime.Now, DateTime.Now, 22, 33);
-            ListingAddedEventArgs arg = new ListingAddedEventArgs();
-            arg.item = _item;
-            ItemAddedEvent?.Invoke(this, arg);
-           
+            if(Mode == EntryMode.Add)
+            {
+                ListingAddedEventArgs arg = new ListingAddedEventArgs();
+                arg.item = _item;
+                ItemAddedEvent?.Invoke(this, arg);
+            }
+            UnregisterVM();
+        }
+
+    
+
+        private bool CanAddToList(object commandParam)
+        {
+            return true;
         }
     }
 }

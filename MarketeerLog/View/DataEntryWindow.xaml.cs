@@ -20,10 +20,18 @@ namespace MarketeerLog.View
     /// </summary>
     public partial class DataEntryWindow : Window
     {
+        IViewModel VM;
         public DataEntryWindow()
         {
+            
             InitializeComponent();
-            DataContext = new DataEntryViewModel();
+            //VM = new DataEntryViewModel(mode);
+            //DataContext = VM;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -13,6 +13,8 @@ namespace MarketeerLog.ViewModel
         private static ViewModelController _instance;
 
         public event EventHandler<ViewModelRegisteredEventArgs> ViewModelRegistered;
+
+        public event EventHandler<ViewModelRegisteredEventArgs> ViewModelUnregistered;
         public static ViewModelController Instance
         {
             get => _instance;
@@ -38,6 +40,13 @@ namespace MarketeerLog.ViewModel
 
             ViewModelRegistered?.Invoke(this, new ViewModelRegisteredEventArgs(viewModel));
 
+        }
+
+        public void UnRegisterviewModel<T>(T viewModel) where T : IViewModel
+        {
+            _viewModels.Remove(viewModel); //TODO MAKE SURE THAT SHIT IN THERE LMAO
+
+            ViewModelUnregistered?.Invoke(this, new ViewModelRegisteredEventArgs(viewModel));
         }
 
         public ViewModelController()

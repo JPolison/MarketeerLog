@@ -98,9 +98,15 @@ namespace MarketeerLog.Model
             _listedPrice = ListedPrice;
             calculateProfit();
         }
+        public ItemListing() 
+        {
+            _listedPrice = 0;
+            _purchasePrice = 0;
+        }
 
         private void calculateProfit()
         {
+   
             Profit = ListedPrice - PurchasePrice;
         }
     }

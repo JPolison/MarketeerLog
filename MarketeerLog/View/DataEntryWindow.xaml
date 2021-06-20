@@ -5,9 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MarketeerLog.View"
         mc:Ignorable="d"
-        Title="Add Item" Height="491.803" Width="368.443" ResizeMode="NoResize">
+        Title="Add Item" Height="471.303" Width="194.443" ResizeMode="NoResize"
+       
+        >
     <Grid>
-        <Button Content="AddItem" Command="{Binding Path=AddCommand}" HorizontalAlignment="Left" Height="74" Margin="137,120,0,0" VerticalAlignment="Top" Width="102"/>
+        <Button Content="{Binding Path=ButtonName}" Command="{Binding Path=AddCommand}" HorizontalAlignment="Left" Height="18" Margin="11,406,0,0" VerticalAlignment="Top" Width="79" Click="Button_Click" RenderTransformOrigin="0.525,-0.667"/>
+
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="10,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Product Name"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Date Listed"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Purchase Price"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Listed Price"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Date Sold"/>
+        <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Sold?"/>
+
+        <TextBox HorizontalAlignment="Left" Height="26" Text="{Binding Path=Item.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
+        <DatePicker HorizontalAlignment="Left" Height="26" SelectedDate="{Binding Path=Item.ListDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="11,110,0,0" VerticalAlignment="Top" Width="150"/>
+        <DatePicker HorizontalAlignment="Left" Height="26" SelectedDate="{Binding Path=Item.SellDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="11,181,0,0" VerticalAlignment="Top" Width="150"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Text="{Binding Path=Item.PurchasePrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat=C}" Margin="11,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Text="{Binding Path=Item.ListedPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat=C}" Margin="10,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
+        <CheckBox Content="CheckBox" IsChecked="{Binding Path=Item.Sold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="17" Margin="11,369,0,0" VerticalAlignment="Top" Width="18"/>
 
     </Grid>
 </Window>

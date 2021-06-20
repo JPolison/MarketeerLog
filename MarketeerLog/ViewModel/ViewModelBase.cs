@@ -35,7 +35,7 @@ namespace MarketeerLog.ViewModel
 
         public void UnregisterVM()
         {
-            //todo lmao write code haha im tired FUCK MVVM
+            ViewModelController.Instance?.UnRegisterviewModel(this);
         }
     }
 }

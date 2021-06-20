@@ -37,8 +37,10 @@ namespace MarketeerLog
 
         private void AddEntry_Click(object sender, RoutedEventArgs e)
         {
-            DataEntryWindow dew = new DataEntryWindow();
-            dew.Show();
+        }
+        private void EditEntry_Click(object sender, RoutedEventArgs e)
+        {
+          
         }
     }
 }
