@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarketeerLog.Model
 {
+    [Serializable]
     public class ItemListing : NotifiedModel
     {
         private string _name;
@@ -21,7 +22,7 @@ namespace MarketeerLog.Model
             }
         }
 
-        private DateTime _listDate;
+        private DateTime _listDate = DateTime.Today;
         public DateTime ListDate
         {
             get => _listDate;
@@ -32,8 +33,8 @@ namespace MarketeerLog.Model
             }
         }
 
-        private DateTime _sellDate;
-        public DateTime SellDate
+        private DateTime? _sellDate = DateTime.Today;
+        public DateTime? SellDate
         {
             get => _sellDate;
             set 

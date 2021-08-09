@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MarketeerLog.ViewModel.EventArguments;
 using MarketeerLog.Model;
 using System.Windows.Input;
+using System.Windows;
 
 namespace MarketeerLog.ViewModel
 {
@@ -49,18 +50,37 @@ namespace MarketeerLog.ViewModel
                 OnPropertyChanged("ButtonName");
             }
         }
-   
+
+        private Visibility _closeVisibility;
+
+        public Visibility CloseVisibility
+        {
+            get => _closeVisibility;
+            set
+            {
+                _closeVisibility = value;
+                OnPropertyChanged("CloseVisibility");
+            }
+        }
+
 
         private readonly DelegateCommand _addCommand;
 
         public ICommand AddCommand => _addCommand;
+
+        private readonly DelegateCommand _closeCommand;
+
+        public ICommand CloseCommand => _closeCommand;
+
+
 
         public DataEntryViewModel(EntryMode mode)
         {
             _item = new ItemListing();
             RegisterVM();
             SwitchMode(mode);
-            _addCommand = new DelegateCommand(AddToList, CanAddToList);
+            _addCommand = new DelegateCommand(_addToList, _canAddToList);
+            _closeCommand = new DelegateCommand(_closeWindow, _canCloseWindow);
          
             
         }
@@ -72,9 +92,11 @@ namespace MarketeerLog.ViewModel
             {
                 case EntryMode.Add:
                     ButtonName = "Add";
+                    CloseVisibility = Visibility.Visible;
                     break;
                 case EntryMode.Edit:
-                    ButtonName = "Close";
+                    ButtonName = "Edit";
+                    CloseVisibility = Visibility.Hidden;
                     break;
             }
         }
@@ -88,12 +110,16 @@ namespace MarketeerLog.ViewModel
         }
 
         
-        private void AddToList(object commandParam)
+        private void _addToList(object commandParam)
         {
             if(Mode == EntryMode.Add)
             {
                 ListingAddedEventArgs arg = new ListingAddedEventArgs();
                 arg.item = _item;
+                if(arg.item.Sold)
+                {
+                    arg.item.SellDate = null;
+                }
                 ItemAddedEvent?.Invoke(this, arg);
             }
             UnregisterVM();
@@ -101,7 +127,17 @@ namespace MarketeerLog.ViewModel
 
     
 
-        private bool CanAddToList(object commandParam)
+        private bool _canAddToList(object commandParam)
+        {
+            return true;
+        }
+
+        private void _closeWindow(object commandParam)
+        {
+            UnregisterVM();
+        }
+
+        private bool _canCloseWindow(object commandParam)
         {
             return true;
         }

@@ -55,6 +55,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -77,6 +78,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\FilterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,12 +90,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConfigData.cs" />
+    <Compile Include="Model\Content\ContentManager.cs" />
+    <Compile Include="Model\Content\ContentActionEventArgs.cs" />
+    <Compile Include="Model\Content\ContentState.cs" />
+    <Compile Include="Model\FilterSettings.cs" />
     <Compile Include="Model\ItemListing.cs" />
     <Compile Include="Model\NotifiedModel.cs" />
     <Compile Include="ViewModel\DataEntryViewModel.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\EventArguments\FilterChangedEventArgs.cs" />
     <Compile Include="ViewModel\EventArguments\ViewModelRegisteredEventArgs.cs" />
     <Compile Include="ViewModel\EventArguments\ListingAddedEventArgs.cs" />
+    <Compile Include="ViewModel\FilterViewModel.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\WindowProvider.cs" />
     <Compile Include="ViewModel\IWindowService.cs" />
@@ -99,6 +111,9 @@
     <Compile Include="ViewModel\ViewModelController.cs" />
     <Compile Include="View\DataEntryWindow.xaml.cs">
       <DependentUpon>DataEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FilterWindow.xaml.cs">
+      <DependentUpon>FilterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

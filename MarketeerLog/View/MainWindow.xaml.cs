@@ -21,7 +21,6 @@ namespace MarketeerLog
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
     public partial class MainWindow : Window
     {
 
@@ -29,7 +28,6 @@ namespace MarketeerLog
         {
             
             InitializeComponent();
-            new ViewModelController();
             //MainViewModel VM = new MainViewModel();
             DataContext = new MainViewModel();
 
@@ -41,6 +39,18 @@ namespace MarketeerLog
         private void EditEntry_Click(object sender, RoutedEventArgs e)
         {
           
+        }
+
+        private void ToolBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            ToolBar toolbar = sender as ToolBar;
+
+            var overflowgrid = toolbar.Template.FindName("OverflowGrid", toolbar) as FrameworkElement;
+
+            if(overflowgrid != null)
+            {
+                overflowgrid.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

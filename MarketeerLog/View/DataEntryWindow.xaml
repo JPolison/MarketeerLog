@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:MarketeerLog.View"
         mc:Ignorable="d"
         Title="Add Item" Height="471.303" Width="194.443" ResizeMode="NoResize"
-       
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None" Background="White"
+        BorderBrush="Gray" BorderThickness="1" 
         >
     <Grid>
-        <Button Content="{Binding Path=ButtonName}" Command="{Binding Path=AddCommand}" HorizontalAlignment="Left" Height="18" Margin="11,406,0,0" VerticalAlignment="Top" Width="79" Click="Button_Click" RenderTransformOrigin="0.525,-0.667"/>
+        <Button Content="{Binding Path=ButtonName}" Command="{Binding Path=AddCommand}" HorizontalAlignment="Left" Height="26" Margin="11,402,0,0" VerticalAlignment="Top" Width="64" Click="Button_Click" RenderTransformOrigin="0.525,-0.667"/>
+        <Button Content="Close" Visibility="{Binding Path=CloseVisibility}"  Command="{Binding Path=CloseCommand}" HorizontalAlignment="Left" Height="26" Margin="118,402,0,0" VerticalAlignment="Top" Width="64" Click="Button_Click" RenderTransformOrigin="0.525,-0.667" />
 
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="10,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Product Name"/>
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="11,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Text="Date Listed"/>

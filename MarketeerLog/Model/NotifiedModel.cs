@@ -9,8 +9,10 @@ using System.Runtime.CompilerServices;
 
 namespace MarketeerLog.Model
 {
+    [Serializable]
     public abstract class NotifiedModel : INotifyPropertyChanged
     {
+        [field:NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

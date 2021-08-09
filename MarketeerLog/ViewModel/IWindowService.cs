@@ -10,5 +10,7 @@ namespace MarketeerLog.ViewModel
     public interface IWindowService
     {
         void ShowDialog<T>(IViewModel viewmodel) where T : Window, new();
+
+        void ShowWindow<T>(IViewModel viewmodel) where T : Window, new();
     }
 }

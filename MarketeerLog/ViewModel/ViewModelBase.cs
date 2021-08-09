@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MarketeerLog.ViewModel
 {
+    [Serializable]
     public abstract class ViewModelBase : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;

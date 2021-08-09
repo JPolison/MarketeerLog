@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:MarketeerLog"
         mc:Ignorable="d"
-        Title="MarketeerLog" Height="450" Width="800">
+        Title="Marketeer Log V1.0" Height="423" Width="927.333" MinWidth="925" MinHeight="423" MaxWidth="927.333">
     <Grid>
-        <DataGrid x:Name="ListingDataGrid" ItemsSource="{Binding ListedItems}" SelectedItem="{Binding SelectedListing, Mode=TwoWay}" SelectionUnit="FullRow"  Margin="10,69,10,13" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid x:Name="ListingDataGrid" ItemsSource="{Binding ListView}" SelectedItem="{Binding SelectedListing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionUnit="FullRow"  Margin="10,94,10,13" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Listed Date" Binding="{Binding ListDate}" />
@@ -20,8 +21,22 @@
 
 
         </DataGrid>
-        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="-118,-67,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddEntry" Command="{Binding Path=AddEntryCommand}" Content="Add" Margin="10,44,0,0" HorizontalAlignment="Left" Width="71" Height="20" VerticalAlignment="Top" Click="AddEntry_Click"/>
-        <Button x:Name="EditEntry" Command="{Binding Path=EditEntryCommand}" Content="Edit" Margin="108,44,0,0" HorizontalAlignment="Left" Width="71" Height="20" VerticalAlignment="Top" Click="EditEntry_Click"/>
+        <Button x:Name="AddEntry" Command="{Binding Path=AddEntryCommand}" Content="Add" Margin="10,69,0,0" HorizontalAlignment="Left" Width="71" Height="20" VerticalAlignment="Top" Click="AddEntry_Click" RenderTransformOrigin="0.606,1.95" />
+        <Button x:Name="EditEntry" Command="{Binding Path=EditEntryCommand, UpdateSourceTrigger=PropertyChanged}"  Content="Edit" Margin="104,69,0,0" HorizontalAlignment="Left" Width="71" Height="20" VerticalAlignment="Top" Click="EditEntry_Click" RenderTransformOrigin="0.465,1.2"/>
+        <Button x:Name="RemoveEntry" Command="{Binding Path=RemoveEntryCommand}" Content="Remove" Margin="194,69,0,0" HorizontalAlignment="Left" Width="71" Height="20" VerticalAlignment="Top"/>
+       
+        <ToolBarTray Height="25" VerticalAlignment="Top">
+            <ToolBar  Height="25" VerticalAlignment="Top" Loaded="ToolBar_Loaded">
+                <Button x:Name="OpenFile" Command="{Binding Path=OpenContent}" Content="Open" Width="50" Height="20"/>
+                <Button x:Name="SaveFile" Command="{Binding Path=SaveContent}" Content="Save" Width="50" Height="20"/>
+
+            </ToolBar>
+        </ToolBarTray>
+        <TextBox IsEnabled="{Binding Path=IsDateInput}" Visibility="{Binding Path=StringInputVisibility}" Height="23" Margin="541,67,0,0" TextWrapping="Wrap" Text="{Binding Path=FilterString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="148"/>
+        <Button Content="Change Filter" Command="{Binding Path=OpenFilterSettings}" HorizontalAlignment="Left" Height="23" Margin="446,69,0,0" VerticalAlignment="Top" Width="79"/>
+        <DatePicker SelectedDate="{Binding Path=FilterDateTime}" IsEnabled="{Binding Path=IsDateTimeInput}" Visibility="{Binding Path=DatetimeInputVisibility}" HorizontalAlignment="Left" Margin="541,67,0,0" VerticalAlignment="Top" Width="148"/>
+        <Button Content="{Binding Path=CompareFilterContent}" Visibility="{Binding Path=CompareFilterVisibility}" Command="{Binding Path=CompareFilter}" HorizontalAlignment="Left" Height="23" Margin="541,40,0,0" VerticalAlignment="Top" Width="133" BorderBrush="#FF747474"/>
+        <TextBlock Height="23" Margin="700,68,0,0" TextWrapping="Wrap" Text="{Binding Path=FilterName}" VerticalAlignment="Top" RenderTransformOrigin="0.453,0.5" HorizontalAlignment="Left" Width="169"/>
+
     </Grid>
 </Window>
